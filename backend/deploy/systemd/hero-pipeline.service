@@ -1,0 +1,28 @@
+[Unit]
+Description=HERO — discover, harvest, restructure, export peraturan
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=hero
+Group=hero
+WorkingDirectory=/opt/hero
+# HOME eksplisit: systemd tidak otomatis menyetelnya, dan rclone butuh ini
+# untuk menemukan ~/.config/rclone/rclone.conf milik user 'hero'.
+Environment=HOME=/opt/hero
+# Berapa dokumen baru diunduh per sumber per putaran (default di
+# run-pipeline.sh: 100). Turunkan kalau ingin beban lebih ringan per hari,
+# misal Environment=HERO_HARVEST_LIMIT=30
+#Environment=HERO_HARVEST_LIMIT=100
+ExecStart=/opt/hero/deploy/run-pipeline.sh
+# Batas wajar: satu putaran tidak boleh menggantung selamanya kalau sebuah
+# situs sumber macet total.
+TimeoutStartSec=6h
+# Nice/IOSchedule rendah — VPS ini juga menjalankan Nextcloud untuk pengguna.
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=6
+
+[Install]
+WantedBy=multi-user.target

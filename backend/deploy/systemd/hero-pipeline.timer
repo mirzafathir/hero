@@ -1,0 +1,14 @@
+[Unit]
+Description=Jadwal harian pipeline HERO (discover ringan + harvest bertahap + export)
+
+[Timer]
+# Setiap hari jam 02:30 waktu server — di luar jam kerja, dan cukup jarang
+# agar tetap sopan terhadap server sumber (ojk.go.id, jdih.ojk.go.id).
+OnCalendar=*-*-* 02:30:00
+# Kalau VPS sempat mati saat jadwal harusnya jalan, jalankan begitu menyala lagi.
+Persistent=true
+# Jitter kecil supaya tidak selalu presisi ke detik yang sama tiap hari.
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

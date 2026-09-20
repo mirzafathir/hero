@@ -1,0 +1,631 @@
+<title>__TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root {
+  --ground: #EEF1F4;
+  --surface: #FFFFFF;
+  --surface-2: #F6F8FA;
+  --ink: #16202A;
+  --muted: #5A6876;
+  --faint: #8894A0;
+  --rule: #D5DCE3;
+  --rule-strong: #B9C4CE;
+  --accent: #2A4C9B;
+  --accent-ink: #FFFFFF;
+  --accent-wash: #E4EAF7;
+  --row-hover: #F2F5FA;
+  --s-berlaku: #1F7A4D;
+  --s-diubah: #E0A018;
+  --s-dicabut: #B3261E;
+  --s-rancangan: #5A57C8;
+  --s-unknown: #6E7A87;
+  --s-berlaku-wash: #E3F1E9;
+  --s-diubah-wash: #FBF1D9;
+  --s-dicabut-wash: #F8E3E1;
+  --s-rancangan-wash: #ECEBFA;
+  --s-unknown-wash: #EEF1F4;
+  --shadow: 0 10px 30px rgba(22, 32, 42, 0.14);
+  --font-body: "IBM Plex Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-cond: "IBM Plex Sans Condensed", "Arial Narrow", "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0E141A; --surface: #141C24; --surface-2: #18222C;
+    --ink: #E4EAF0; --muted: #93A2B0; --faint: #6C7B89;
+    --rule: #25313C; --rule-strong: #34424F;
+    --accent: #8EA9EE; --accent-ink: #0E141A; --accent-wash: #1D2A45; --row-hover: #1A2530;
+    --s-berlaku: #2E8560; --s-diubah: #AD8D27; --s-dicabut: #DD5E7A;
+    --s-rancangan: #8487EA; --s-unknown: #8795A3;
+    --s-berlaku-wash: #16302A; --s-diubah-wash: #342A14; --s-dicabut-wash: #3A1D1C;
+    --s-rancangan-wash: #25254A; --s-unknown-wash: #1D2731;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0E141A; --surface: #141C24; --surface-2: #18222C;
+  --ink: #E4EAF0; --muted: #93A2B0; --faint: #6C7B89;
+  --rule: #25313C; --rule-strong: #34424F;
+  --accent: #8EA9EE; --accent-ink: #0E141A; --accent-wash: #1D2A45; --row-hover: #1A2530;
+  --s-berlaku: #2E8560; --s-diubah: #AD8D27; --s-dicabut: #DD5E7A;
+  --s-rancangan: #8487EA; --s-unknown: #8795A3;
+  --s-berlaku-wash: #16302A; --s-diubah-wash: #342A14; --s-dicabut-wash: #3A1D1C;
+  --s-rancangan-wash: #25254A; --s-unknown-wash: #1D2731;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font: 14px/1.5 var(--font-body);
+  padding-inline: clamp(16px, 3vw, 36px); padding-block: 22px 40px;
+}
+a { color: var(--accent); text-underline-offset: 2px; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.mono { font-family: var(--font-mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.eyebrow {
+  font: 600 11px/1.2 var(--font-cond); letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- masthead ---------- */
+.masthead { display: grid; gap: 18px; max-width: 1480px; margin-inline: auto; }
+.mast-top {
+  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px;
+  border-bottom: 2px solid var(--ink); padding-bottom: 12px;
+}
+.mast-top h1 {
+  margin: 4px 0 0; font: 700 clamp(26px, 3.4vw, 38px)/1.05 var(--font-cond);
+  letter-spacing: -0.01em; text-wrap: balance;
+}
+.mast-top .note { color: var(--muted); max-width: 62ch; margin: 6px 0 0; }
+.stamp { text-align: right; color: var(--muted); font-size: 12.5px; }
+.stamp strong { display: block; font: 600 30px/1 var(--font-cond); color: var(--ink);
+  font-variant-numeric: tabular-nums; }
+
+.band { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; }
+@media (max-width: 900px) { .band { grid-template-columns: 1fr; } }
+.sources { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0;
+  border: 1px solid var(--rule); background: var(--surface); }
+.source { padding: 12px 14px; display: grid; gap: 4px; }
+.source + .source { border-left: 1px solid var(--rule); }
+@media (max-width: 640px) { .source + .source { border-left: 0; border-top: 1px solid var(--rule); } }
+.source .n { font: 600 24px/1 var(--font-cond); font-variant-numeric: tabular-nums; }
+.source .meta { color: var(--muted); font-size: 12.5px; }
+.source a { font-size: 12px; overflow-wrap: anywhere; }
+
+.statusbox { border: 1px solid var(--rule); background: var(--surface); padding: 12px 14px;
+  display: grid; gap: 10px; align-content: start; }
+.bar { display: flex; height: 18px; gap: 2px; }
+.bar button { border: 0; padding: 0; min-width: 3px; cursor: pointer; }
+.bar button:first-child { border-radius: 4px 0 0 4px; }
+.bar button:last-child { border-radius: 0 4px 4px 0; }
+.bar button:only-child { border-radius: 4px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0; padding: 0; list-style: none; }
+.legend li { display: flex; align-items: center; gap: 6px; font-size: 12.5px; }
+.legend b { font-variant-numeric: tabular-nums; font-weight: 600; }
+.sw { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+.tip { position: fixed; pointer-events: none; z-index: 30; background: var(--ink); color: var(--surface);
+  padding: 5px 8px; border-radius: 4px; font-size: 12px; white-space: nowrap; }
+
+/* ---------- toolbar ---------- */
+.toolbar {
+  position: sticky; top: 0; z-index: 20; margin: 18px auto 0; max-width: 1480px;
+  background: var(--ground); padding-block: 10px; display: grid; gap: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.tool-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.search { flex: 1 1 280px; position: relative; }
+.search input {
+  width: 100%; height: 36px; padding: 0 12px 0 34px; border: 1px solid var(--rule-strong);
+  background: var(--surface); border-radius: 6px;
+}
+.search svg { position: absolute; left: 11px; top: 11px; width: 14px; height: 14px; fill: none;
+  stroke: var(--muted); stroke-width: 2; }
+select.sel { height: 36px; padding: 0 10px; border: 1px solid var(--rule-strong); border-radius: 6px;
+  background: var(--surface); }
+.group-label { font: 600 11px/1 var(--font-cond); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); margin-right: 2px; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px;
+  border: 1px solid var(--rule-strong); border-radius: 14px; background: var(--surface);
+  cursor: pointer; font-size: 12.5px;
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip .c { font-variant-numeric: tabular-nums; opacity: 0.75; }
+.count { margin-left: auto; color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.btn { height: 32px; padding: 0 12px; border: 1px solid var(--rule-strong); border-radius: 6px;
+  background: var(--surface); cursor: pointer; }
+.btn:hover { border-color: var(--accent); }
+
+/* column picker */
+.picker { position: relative; }
+.picker > summary { list-style: none; }
+.picker > summary::-webkit-details-marker { display: none; }
+.picker-panel {
+  position: absolute; right: 0; top: 40px; z-index: 25; width: min(420px, 86vw);
+  max-height: 60vh; overflow: auto; background: var(--surface); border: 1px solid var(--rule-strong);
+  border-radius: 8px; box-shadow: var(--shadow); padding: 12px; display: grid; gap: 10px;
+}
+.picker-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.picker fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: 2px; }
+.picker legend { padding: 0 0 4px; }
+.picker label { display: flex; gap: 8px; align-items: baseline; padding: 3px 4px; border-radius: 4px;
+  cursor: pointer; font-size: 13px; }
+.picker label:hover { background: var(--row-hover); }
+
+/* ---------- table ---------- */
+.table-wrap {
+  max-width: 1480px; margin: 12px auto 0; overflow: auto; max-height: 72vh;
+  border: 1px solid var(--rule); background: var(--surface);
+}
+table { border-collapse: separate; border-spacing: 0; min-width: 100%; }
+th, td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+th {
+  position: sticky; top: 0; z-index: 3; background: var(--surface-2);
+  font: 600 12px/1.25 var(--font-cond); letter-spacing: 0.02em; color: var(--muted);
+  border-bottom: 1px solid var(--rule-strong); white-space: nowrap;
+}
+th button { all: unset; display: flex; align-items: center; gap: 4px; padding: 9px 10px; cursor: pointer; }
+th button:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+th[aria-sort] { color: var(--ink); }
+th .arr { font-size: 10px; opacity: 0.8; }
+th.raw { color: var(--faint); }
+th.raw[aria-sort] { color: var(--ink); }
+th.divider, td.divider { border-left: 2px solid var(--rule-strong); }
+td { padding: 8px 10px; }
+/* Widths are set on the cell, not left to table auto-layout: with 60
+   columns the browser otherwise squeezes text columns until words split
+   mid-syllable ("Perbanka/n"). break-word only breaks tokens that cannot
+   fit at all — long URLs, file names — never ordinary words. */
+td .cell {
+  width: max-content; min-width: 12ch; max-width: 30ch; overflow: hidden;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
+  overflow-wrap: break-word; word-break: normal; hyphens: manual;
+}
+td.wide .cell { min-width: 28ch; max-width: 46ch; }
+td .cell.mono { min-width: 0; white-space: nowrap; display: block; }
+td .cell:has(.status) { min-width: 0; display: block; }
+td.empty { color: var(--faint); }
+tbody tr { cursor: pointer; }
+tbody tr:hover td { background: var(--row-hover); }
+.sticky { position: sticky; left: 0; z-index: 2; background: var(--surface);
+  box-shadow: 1px 0 0 var(--rule-strong); }
+th.sticky { z-index: 4; background: var(--surface-2); }
+tbody tr:hover td.sticky { background: var(--row-hover); }
+td.sticky .cell { min-width: 34ch; max-width: 42ch; font-weight: 500; }
+@media (max-width: 640px) { td.sticky .cell { min-width: 22ch; max-width: 26ch; } }
+
+.status {
+  display: inline-flex; align-items: center; gap: 6px; padding: 1px 8px 1px 7px; border-radius: 10px;
+  font-size: 12px; white-space: nowrap; border: 1px solid transparent;
+}
+.status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.st-berlaku { color: var(--s-berlaku); background: var(--s-berlaku-wash); }
+.st-diubah { color: var(--ink); background: var(--s-diubah-wash); }
+.st-diubah::before { background: var(--s-diubah); }
+.st-dicabut { color: var(--s-dicabut); background: var(--s-dicabut-wash); }
+.st-rancangan { color: var(--s-rancangan); background: var(--s-rancangan-wash);
+  border-style: dashed; border-color: var(--s-rancangan); }
+.st-unknown { color: var(--muted); background: transparent; border-color: var(--rule-strong); }
+.st-unknown::before { background: transparent; border: 1.5px solid var(--s-unknown); width: 5px; height: 5px; }
+
+.pager { max-width: 1480px; margin: 10px auto 0; display: flex; flex-wrap: wrap; align-items: center;
+  gap: 8px 12px; color: var(--muted); font-size: 12.5px; }
+.pager .spacer { flex: 1; }
+.empty-state { padding: 48px 16px; text-align: center; color: var(--muted); }
+
+/* ---------- detail drawer ---------- */
+dialog.drawer {
+  margin: 0 0 0 auto; height: 100dvh; max-height: 100dvh; width: min(640px, 100vw);
+  border: 0; border-left: 1px solid var(--rule-strong); padding: 0; background: var(--surface);
+  color: var(--ink); box-shadow: var(--shadow);
+}
+dialog.drawer::backdrop { background: rgba(14, 20, 26, 0.35); }
+.drawer-head { position: sticky; top: 0; background: var(--surface); padding: 18px 22px 12px;
+  border-bottom: 1px solid var(--rule); display: grid; gap: 8px; }
+.drawer-head h2 { margin: 0; font: 600 20px/1.25 var(--font-cond); text-wrap: balance; }
+.drawer-head .close { position: absolute; right: 14px; top: 14px; }
+.drawer-body { padding: 8px 22px 28px; }
+.drawer dl { margin: 0; display: grid; grid-template-columns: minmax(120px, 34%) 1fr; }
+.drawer dt, .drawer dd { padding: 7px 0; border-bottom: 1px solid var(--rule); margin: 0; }
+.drawer dt { color: var(--muted); font-size: 12.5px; padding-right: 12px; }
+.drawer dd { overflow-wrap: anywhere; white-space: pre-line; }
+.drawer .sec { grid-column: 1 / -1; padding: 16px 0 4px; border: 0; }
+
+footer.foot { max-width: 1480px; margin: 18px auto 0; color: var(--muted); font-size: 12px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<header class="masthead">
+  <div class="mast-top">
+    <div>
+      <div class="eyebrow">HERO · Inventaris sumber regulasi</div>
+      <h1>__TITLE__</h1>
+      <p class="note">Setiap rekaman yang dipublikasikan tiga sumber resmi, lengkap dengan
+        setiap kolom yang mereka cantumkan. Klik baris untuk melihat semua isinya.</p>
+    </div>
+    <div class="stamp"><strong id="total">—</strong>rekaman · dihimpun <span id="generated" class="mono"></span></div>
+  </div>
+  <div class="band">
+    <div class="sources" id="sources" aria-label="Jumlah rekaman per sumber"></div>
+    <div class="statusbox">
+      <div class="eyebrow">Status hukum</div>
+      <div class="bar" id="bar" role="img" aria-label="Distribusi status hukum"></div>
+      <ul class="legend" id="legend"></ul>
+    </div>
+  </div>
+</header>
+
+<section class="toolbar" aria-label="Penyaring">
+  <div class="tool-row">
+    <label class="search" for="q">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="5"/><path d="M11 11l4 4"/></svg>
+      <input id="q" type="search" placeholder="Cari judul, nomor, subjek, landasan hukum…" autocomplete="off">
+    </label>
+    <select id="type" class="sel" aria-label="Jenis"></select>
+    <select id="year" class="sel" aria-label="Tahun"></select>
+    <details class="picker" id="picker">
+      <summary class="btn" role="button">Kolom <span id="colcount" class="mono"></span></summary>
+      <div class="picker-panel">
+        <div class="picker-actions">
+          <button type="button" class="btn" id="cols-all">Tampilkan semua</button>
+          <button type="button" class="btn" id="cols-core">Hanya kolom inti</button>
+        </div>
+        <fieldset id="cols-core-set"><legend class="eyebrow">Kolom inti HERO</legend></fieldset>
+        <fieldset id="cols-raw-set"><legend class="eyebrow">Kolom asli dari sumber</legend></fieldset>
+      </div>
+    </details>
+  </div>
+  <div class="tool-row">
+    <span class="group-label">Sumber</span><span id="src-chips" class="tool-row"></span>
+    <span class="group-label" style="margin-left:8px">Status</span><span id="st-chips" class="tool-row"></span>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+</section>
+
+<div class="table-wrap" id="wrap">
+  <table id="grid" aria-describedby="count">
+    <thead><tr id="head"></tr></thead>
+    <tbody id="body"></tbody>
+  </table>
+</div>
+
+<nav class="pager" aria-label="Halaman tabel">
+  <button type="button" class="btn" id="prev">← Sebelumnya</button>
+  <span id="pageinfo" class="mono"></span>
+  <button type="button" class="btn" id="next">Berikutnya →</button>
+  <span class="spacer"></span>
+  <label for="size">Baris per halaman</label>
+  <select id="size" class="sel">
+    <option>50</option><option selected>100</option><option>250</option><option>500</option>
+  </select>
+</nav>
+
+<footer class="foot" id="foot"></footer>
+
+<dialog class="drawer" id="drawer" aria-labelledby="d-title">
+  <div class="drawer-head">
+    <div class="eyebrow" id="d-source"></div>
+    <h2 id="d-title"></h2>
+    <div id="d-status"></div>
+    <button type="button" class="btn close" id="d-close">Tutup</button>
+  </div>
+  <div class="drawer-body"><dl id="d-list"></dl></div>
+</dialog>
+
+<div class="tip" id="tip" hidden></div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(() => {
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const COLS = D.columns, NCORE = D.core, ROWS = D.rows;
+  const col = (name) => COLS.indexOf(name);
+  const I = {
+    title: col("Judul"), source: col("Sumber"), status: col("Status"),
+    type: col("Jenis (singkatan)"), year: col("Tahun"), number: col("Nomor"),
+    statusLabel: col("Status (tulisan sumber)"),
+  };
+  const STATUS_KEY = { "Berlaku": "berlaku", "Diubah": "diubah", "Dicabut": "dicabut",
+                       "Rancangan": "rancangan", "Tidak diketahui": "unknown" };
+  const WIDE = new Set(["Judul", "Berkas Terkait", "Landasan Hukum", "Riwayat Peraturan",
+                        "Uraian", "Deskripsi", "Subjek", "Isi Arsip"]);
+  const nf = new Intl.NumberFormat("id-ID");
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, attrs = {}, text) => {
+    const n = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === "class") n.className = v; else if (v !== undefined && v !== null) n.setAttribute(k, v);
+    }
+    if (text !== undefined) n.textContent = text;
+    return n;
+  };
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem("hero-inv:" + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+    set(k, v) { try { localStorage.setItem("hero-inv:" + k, JSON.stringify(v)); } catch {} },
+  };
+
+  // Pre-lowercased haystack per row, built once.
+  const HAY = ROWS.map((r) => r.map((v) => (v == null ? "" : String(v))).join("  ").toLowerCase());
+
+  const state = {
+    q: "", sources: new Set(), statuses: new Set(), type: "", year: "",
+    visible: new Set(store.get("visible", null) || COLS.map((_, i) => i)),
+    sort: { i: -1, dir: 1 }, page: 0, size: 100,
+  };
+  // A stored column choice from an older export may reference fewer columns.
+  if (state.visible.size === 0) COLS.forEach((_, i) => state.visible.add(i));
+
+  /* ---------- masthead ---------- */
+  $("total").textContent = nf.format(ROWS.length);
+  $("generated").textContent = D.generated.replace("T", " ");
+  const src = $("sources");
+  for (const s of D.summary.sources) {
+    const box = el("div", { class: "source" });
+    box.append(el("div", { class: "eyebrow" }, s.label));
+    box.append(el("div", { class: "n" }, nf.format(s.count)));
+    box.append(el("div", { class: "meta" },
+      `${nf.format(s.enriched)} detail dibaca · ${nf.format(s.in_kb)} di knowledge base`));
+    if (s.url) {
+      const a = el("a", { href: s.url, target: "_blank", rel: "noopener" }, new URL(s.url).host);
+      box.append(a);
+    }
+    src.append(box);
+  }
+  const tip = $("tip");
+  const total = D.summary.status.reduce((a, s) => a + s.count, 0) || 1;
+  for (const s of D.summary.status) {
+    const b = el("button", { type: "button", "aria-label": `${s.label}: ${s.count}` });
+    b.style.flex = String(s.count);
+    b.style.background = `var(--s-${s.key})`;
+    const pct = (100 * s.count / total).toFixed(1).replace(".", ",");
+    b.addEventListener("mousemove", (e) => {
+      tip.hidden = false; tip.textContent = `${s.label} · ${nf.format(s.count)} (${pct}%)`;
+      tip.style.left = `${e.clientX + 12}px`; tip.style.top = `${e.clientY + 14}px`;
+    });
+    b.addEventListener("mouseleave", () => { tip.hidden = true; });
+    b.addEventListener("click", () => toggleSet(state.statuses, s.label, "st"));
+    $("bar").append(b);
+    const li = el("li");
+    const sw = el("span", { class: "sw" }); sw.style.background = `var(--s-${s.key})`;
+    li.append(sw, document.createTextNode(s.label + " "), el("b", {}, nf.format(s.count)));
+    $("legend").append(li);
+  }
+
+  /* ---------- filters ---------- */
+  function countBy(i) {
+    const m = new Map();
+    for (const r of ROWS) { const v = r[i]; if (v != null && v !== "") m.set(v, (m.get(v) || 0) + 1); }
+    return m;
+  }
+  function chips(target, i, set, kind) {
+    const host = $(target);
+    for (const [v, n] of [...countBy(i)].sort((a, b) => b[1] - a[1])) {
+      const c = el("button", { type: "button", class: "chip", "aria-pressed": "false", "data-v": v, "data-kind": kind });
+      c.append(document.createTextNode(v + " "), el("span", { class: "c" }, nf.format(n)));
+      c.addEventListener("click", () => toggleSet(set, v, kind));
+      host.append(c);
+    }
+  }
+  function toggleSet(set, v, kind) {
+    set.has(v) ? set.delete(v) : set.add(v);
+    document.querySelectorAll(`.chip[data-kind="${kind}"]`).forEach((c) =>
+      c.setAttribute("aria-pressed", String(set.has(c.dataset.v))));
+    state.page = 0; update();
+  }
+  chips("src-chips", I.source, state.sources, "src");
+  chips("st-chips", I.status, state.statuses, "st");
+
+  function fillSelect(id, i, allLabel, numericDesc) {
+    const s = $(id);
+    s.append(el("option", { value: "" }, allLabel));
+    const entries = [...countBy(i)];
+    entries.sort(numericDesc ? (a, b) => Number(b[0]) - Number(a[0]) : (a, b) => b[1] - a[1]);
+    for (const [v, n] of entries) s.append(el("option", { value: String(v) }, `${v} (${nf.format(n)})`));
+  }
+  fillSelect("type", I.type, "Semua jenis", false);
+  fillSelect("year", I.year, "Semua tahun", true);
+  $("type").addEventListener("change", (e) => { state.type = e.target.value; state.page = 0; update(); });
+  $("year").addEventListener("change", (e) => { state.year = e.target.value; state.page = 0; update(); });
+  let qTimer;
+  $("q").addEventListener("input", (e) => {
+    clearTimeout(qTimer);
+    qTimer = setTimeout(() => { state.q = e.target.value.trim().toLowerCase(); state.page = 0; update(); }, 120);
+  });
+
+  /* ---------- column picker ---------- */
+  function buildPicker() {
+    const core = $("cols-core-set"), raw = $("cols-raw-set");
+    COLS.forEach((name, i) => {
+      const id = `col-${i}`;
+      const lab = el("label", { for: id });
+      const cb = el("input", { type: "checkbox", id });
+      cb.checked = state.visible.has(i);
+      cb.addEventListener("change", () => {
+        cb.checked ? state.visible.add(i) : state.visible.delete(i);
+        store.set("visible", [...state.visible]); render();
+      });
+      lab.append(cb, document.createTextNode(name));
+      (i < NCORE ? core : raw).append(lab);
+    });
+  }
+  function syncPicker() {
+    COLS.forEach((_, i) => { const cb = $(`col-${i}`); if (cb) cb.checked = state.visible.has(i); });
+    $("colcount").textContent = `${state.visible.size}/${COLS.length}`;
+  }
+  $("cols-all").addEventListener("click", () => {
+    COLS.forEach((_, i) => state.visible.add(i)); store.set("visible", [...state.visible]); render();
+  });
+  $("cols-core").addEventListener("click", () => {
+    state.visible = new Set(COLS.map((_, i) => i).filter((i) => i < NCORE));
+    store.set("visible", [...state.visible]); render();
+  });
+  document.addEventListener("click", (e) => {
+    const p = $("picker"); if (p.open && !p.contains(e.target)) p.open = false;
+  });
+  buildPicker();
+
+  /* ---------- filtering + sorting ---------- */
+  let view = [];
+  function filterRows() {
+    const out = [];
+    for (let k = 0; k < ROWS.length; k++) {
+      const r = ROWS[k];
+      if (state.sources.size && !state.sources.has(r[I.source])) continue;
+      if (state.statuses.size && !state.statuses.has(r[I.status])) continue;
+      if (state.type && String(r[I.type] ?? "") !== state.type) continue;
+      if (state.year && String(r[I.year] ?? "") !== state.year) continue;
+      if (state.q && !HAY[k].includes(state.q)) continue;
+      out.push(k);
+    }
+    const { i, dir } = state.sort;
+    if (i >= 0) {
+      out.sort((a, b) => {
+        const x = ROWS[a][i], y = ROWS[b][i];
+        if (x == null || x === "") return 1;
+        if (y == null || y === "") return -1;
+        if (typeof x === "number" && typeof y === "number") return (x - y) * dir;
+        return String(x).localeCompare(String(y), "id", { numeric: true }) * dir;
+      });
+    }
+    return out;
+  }
+
+  /* ---------- rendering ---------- */
+  function order() {
+    // Judul stays pinned as the first column while scrolling sideways.
+    const v = [...state.visible].sort((a, b) => a - b);
+    return v.includes(I.title) ? [I.title, ...v.filter((i) => i !== I.title)] : v;
+  }
+  function statusChip(label) {
+    const key = STATUS_KEY[label] || "unknown";
+    return el("span", { class: `status st-${key}` }, label || "Tidak diketahui");
+  }
+  function isUrl(v) { return typeof v === "string" && /^https?:\/\//.test(v); }
+  function shortUrl(v) {
+    try { const u = new URL(v); const p = decodeURIComponent(u.pathname); return u.host + (p.length > 38 ? p.slice(0, 18) + "…" + p.slice(-16) : p); }
+    catch { return v; }
+  }
+  function renderHead(cols) {
+    const tr = $("head"); tr.replaceChildren();
+    cols.forEach((i, pos) => {
+      const th = el("th", { scope: "col", class: [i >= NCORE ? "raw" : "", i === I.title ? "sticky" : "",
+        pos > 0 && i >= NCORE && cols[pos - 1] < NCORE ? "divider" : ""].join(" ").trim() || undefined });
+      if (state.sort.i === i) th.setAttribute("aria-sort", state.sort.dir > 0 ? "ascending" : "descending");
+      const b = el("button", { type: "button", title: `Urutkan menurut ${COLS[i]}` });
+      b.append(document.createTextNode(COLS[i]));
+      if (state.sort.i === i) b.append(el("span", { class: "arr" }, state.sort.dir > 0 ? "▲" : "▼"));
+      b.addEventListener("click", () => {
+        state.sort = state.sort.i === i ? { i, dir: -state.sort.dir } : { i, dir: 1 };
+        state.page = 0; update();
+      });
+      th.append(b); tr.append(th);
+    });
+  }
+  function renderBody(cols) {
+    const body = $("body"); body.replaceChildren();
+    const start = state.page * state.size;
+    const slice = view.slice(start, start + state.size);
+    if (!slice.length) {
+      const td = el("td", { colspan: String(cols.length), class: "empty-state" },
+        "Tidak ada rekaman yang cocok dengan penyaring ini. Hapus sebagian penyaring untuk melihat lebih banyak.");
+      const tr = el("tr"); tr.append(td); body.append(tr); return;
+    }
+    const frag = document.createDocumentFragment();
+    for (const k of slice) {
+      const r = ROWS[k];
+      const tr = el("tr", { tabindex: "0", "data-k": String(k) });
+      cols.forEach((i, pos) => {
+        const v = r[i];
+        const cls = [i === I.title ? "sticky" : "", WIDE.has(COLS[i]) ? "wide" : "",
+          pos > 0 && i >= NCORE && cols[pos - 1] < NCORE ? "divider" : "",
+          v == null || v === "" ? "empty" : ""].join(" ").trim();
+        const td = el("td", cls ? { class: cls } : {});
+        const cell = el("div", { class: "cell" });
+        if (v == null || v === "") cell.textContent = "—";
+        else if (i === I.status) cell.append(statusChip(v));
+        else if (isUrl(v)) {
+          const a = el("a", { href: v, target: "_blank", rel: "noopener", class: "mono", title: v }, shortUrl(v));
+          a.addEventListener("click", (e) => e.stopPropagation());
+          cell.append(a);
+        } else {
+          cell.textContent = String(v);
+          if (i === I.number || i === I.year || typeof v === "number") cell.classList.add("mono");
+          if (String(v).length > 90) cell.title = String(v);
+        }
+        td.append(cell); tr.append(td);
+      });
+      frag.append(tr);
+    }
+    body.append(frag);
+  }
+  function renderPager() {
+    const pages = Math.max(1, Math.ceil(view.length / state.size));
+    if (state.page >= pages) state.page = pages - 1;
+    const a = view.length ? state.page * state.size + 1 : 0;
+    const b = Math.min(view.length, (state.page + 1) * state.size);
+    $("pageinfo").textContent = `Halaman ${state.page + 1} dari ${pages}`;
+    $("prev").disabled = state.page === 0;
+    $("next").disabled = state.page >= pages - 1;
+    $("count").textContent = view.length === ROWS.length
+      ? `${nf.format(a)}–${nf.format(b)} dari ${nf.format(ROWS.length)} rekaman`
+      : `${nf.format(a)}–${nf.format(b)} dari ${nf.format(view.length)} cocok (total ${nf.format(ROWS.length)})`;
+  }
+  function render() {
+    const cols = order();
+    syncPicker(); renderHead(cols); renderBody(cols); renderPager();
+  }
+  function update() { view = filterRows(); render(); }
+
+  $("prev").addEventListener("click", () => { state.page--; render(); $("wrap").scrollTop = 0; });
+  $("next").addEventListener("click", () => { state.page++; render(); $("wrap").scrollTop = 0; });
+  $("size").addEventListener("change", (e) => { state.size = Number(e.target.value); state.page = 0; render(); });
+
+  /* ---------- detail drawer ---------- */
+  const drawer = $("drawer");
+  function openDetail(k) {
+    const r = ROWS[k];
+    $("d-source").textContent = [r[I.source], r[I.number]].filter(Boolean).join(" · ");
+    $("d-title").textContent = r[I.title] || "(tanpa judul)";
+    $("d-status").replaceChildren(statusChip(r[I.status]));
+    const dl = $("d-list"); dl.replaceChildren();
+    const section = (label) => dl.append(el("dt", { class: "sec eyebrow" }, label));
+    section("Kolom inti HERO");
+    COLS.forEach((name, i) => {
+      if (i === NCORE) section("Kolom asli dari sumber");
+      const v = r[i];
+      if (v == null || v === "") return;
+      dl.append(el("dt", {}, name));
+      const dd = el("dd");
+      if (isUrl(v)) dd.append(el("a", { href: v, target: "_blank", rel: "noopener", class: "mono" }, v));
+      else { dd.textContent = String(v); if (typeof v === "number") dd.className = "mono"; }
+      dl.append(dd);
+    });
+    drawer.showModal();
+  }
+  $("body").addEventListener("click", (e) => {
+    const tr = e.target.closest("tr[data-k]"); if (tr) openDetail(Number(tr.dataset.k));
+  });
+  $("body").addEventListener("keydown", (e) => {
+    if (e.key !== "Enter") return;
+    const tr = e.target.closest("tr[data-k]"); if (tr) openDetail(Number(tr.dataset.k));
+  });
+  $("d-close").addEventListener("click", () => drawer.close());
+  drawer.addEventListener("click", (e) => { if (e.target === drawer) drawer.close(); });
+
+  $("foot").textContent =
+    "Dihimpun otomatis oleh HERO dari halaman publik ojk.go.id dan jdih.ojk.go.id. " +
+    "Bukan publikasi resmi OJK — periksa sumber aslinya melalui kolom Tautan Halaman. " +
+    "Status untuk rekaman ojk.go.id diambil dari JDIH OJK bila nomor, jenis, dan tahunnya cocok.";
+
+  update();
+})();
+</script>
